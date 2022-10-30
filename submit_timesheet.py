@@ -81,7 +81,10 @@ def main():
     today = datetime.date.today()
     monday = today - td(days=today.weekday())
 
-    if (input(f'[T]his week ({monday.strftime("%d/%m")} to {(monday + td(days=4)).strftime("%d/%m")}) or [l]ast week ({(monday - td(days=7)).strftime("%d/%m")} to {(monday - td(days=3)).strftime("%d/%m")})? ') == 'l'):
+    def monday_plus(days: int) -> str:
+        return (monday + td(days=days)).strftime('%d/%m')
+
+    if (input(f'[T]his week ({monday_plus(0)} to {monday_plus(4)}) or [l]ast week ({monday_plus(-7)} to {monday_plus(-3)})? ').lower() == 'l'):
         monday -= td(days=7)
 
     post_timesheet_submit(session, monday)
