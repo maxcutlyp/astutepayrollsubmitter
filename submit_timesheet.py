@@ -7,36 +7,20 @@ import shutil
 import datetime
 from datetime import timedelta as td
 
-USER_ID = 'max.cutlyp'
-APPROVER_USER_ID = 'matt.bradbury'
-MID = '43555'
-UID = '43564'
-DOMAIN = 'megt.astutepayroll.com'
-LOGIN_PATH = '/megt/auth/login'
-SUBMIT_PATH = '/megt/attendance/manage/'
-TIMES = [
-    # start, finish, break
-    ('7:30am','4:00pm','60'),
-    ('7:30am','4:00pm','60'),
-    ('7:30am','4:00pm','60'),
-    ('7:30am','4:00pm','60'),
-    ('7:30am','4:00pm','30'),
-    (None,None,None),
-    (None,None,None),
-]
+import env # if you get an error here, make sure you've created an env.py and it's in the same folder as this script.
 
 def post_login(session: requests.Session):
     password = sp.run(['pass', 'megt-payroll'], capture_output=True).stdout[:-1].decode()
 
     headers = {
-        'authority': DOMAIN,
+        'authority': env.DOMAIN,
         'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
         'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
         'cache-control': 'no-cache',
         'content-type': 'application/x-www-form-urlencoded',
-        'origin': f'https://{DOMAIN}',
+        'origin': f'https://{env.DOMAIN}',
         'pragma': 'no-cache',
-        'referer': f'https://{DOMAIN}{LOGIN_PATH}',
+        'referer': f'https://{env.DOMAIN}{env.LOGIN_PATH}',
         'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="104"',
         'sec-ch-ua-mobile': '?0',
         'sec-ch-ua-platform': '"Linux"',
@@ -48,23 +32,23 @@ def post_login(session: requests.Session):
         'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36',
     }
 
-    data = f'authenticate_userid={USER_ID}&authenticate_password={password}&authenticate=yes&autologin=0&autologin=1&log_in=Log+In'
+    data = f'authenticate_userid={env.USER_ID}&authenticate_password={password}&authenticate=yes&autologin=0&autologin=1&log_in=Log+In'
 
     # todo: handle failure
-    response = session.post(f'https://{DOMAIN}{LOGIN_PATH}', headers=headers, data=data)
+    response = session.post(f'https://{env.DOMAIN}{env.LOGIN_PATH}', headers=headers, data=data)
 
 def post_timesheet_submit(session: requests.Session, monday: datetime.date):
     monday_formatted = monday.strftime('%Y-%m-%d')
 
     headers = {
-        'authority': DOMAIN,
+        'authority': env.DOMAIN,
         'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
         'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
         'cache-control': 'no-cache',
         'content-type': 'multipart/form-data; boundary=----WebKitFormBoundaryfsXTtKjUet8vuqQ9',
-        'origin': f'https://{DOMAIN}',
+        'origin': f'https://{env.DOMAIN}',
         'pragma': 'no-cache',
-        'referer': f'https://{DOMAIN}{SUBMIT_PATH}?MID={MID}&UID={UID}&date={monday_formatted}',
+        'referer': f'https://{env.DOMAIN}{env.SUBMIT_PATH}?MID={env.MID}&UID={env.UID}&date={monday_formatted}',
         'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="104"',
         'sec-ch-ua-mobile': '?0',
         'sec-ch-ua-platform': '"Linux"',
@@ -77,8 +61,8 @@ def post_timesheet_submit(session: requests.Session, monday: datetime.date):
     }
 
     params = {
-        'MID': MID,
-        'UID': UID,
+        'MID': env.MID,
+        'UID': env.UID,
         'date': monday_formatted,
     }
 
@@ -86,7 +70,7 @@ def post_timesheet_submit(session: requests.Session, monday: datetime.date):
     with open(os.path.join(cwd, 'post_body'), 'rb') as f:
         content = f.read()
 
-    for day,times in enumerate(TIMES):
+    for day,times in enumerate(env.TIMES):
         date = monday + td(days=day)
 
         # <DATE_MONDAY> -> YYYY-MM-DD
@@ -98,10 +82,10 @@ def post_timesheet_submit(session: requests.Session, monday: datetime.date):
             content = content.replace(bytes(date.strftime(f"<{time}_%A>").upper(), 'utf-8'),
                                       bytes(times[i], 'utf-8'))
 
-    content = content.replace(b'<UID>', bytes(UID, 'utf-8'))
-    content = content.replace(b'<APPROVER_USER_ID>', bytes(APPROVER_USER_ID, 'utf-8'))
+    content = content.replace(b'<UID>', bytes(env.UID, 'utf-8'))
+    content = content.replace(b'<APPROVER_USER_ID>', bytes(env.APPROVER_USER_ID, 'utf-8'))
 
-    response = session.post(f'https://{DOMAIN}{SUBMIT_PATH}', params=params, headers=headers, data=content)
+    response = session.post(f'https://{env.DOMAIN}{env.SUBMIT_PATH}', params=params, headers=headers, data=content)
 
 def main():
     session = requests.Session()
