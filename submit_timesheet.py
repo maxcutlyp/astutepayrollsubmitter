@@ -7,18 +7,26 @@ import shutil
 import datetime
 from datetime import timedelta as td
 
+USER_ID = 'max.cutlyp'
+APPROVER_USER_ID = 'matt.bradbury'
+MID = '43555'
+UID = '43564'
+DOMAIN = 'megt.astutepayroll.com'
+LOGIN_PATH = '/megt/auth/login'
+SUBMIT_PATH = '/megt/attendance/manage/'
+
 def post_login(session: requests.Session):
     password = sp.run(['pass', 'megt-payroll'], capture_output=True).stdout[:-1].decode()
 
     headers = {
-        'authority': 'megt.astutepayroll.com',
+        'authority': DOMAIN,
         'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
         'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
         'cache-control': 'no-cache',
         'content-type': 'application/x-www-form-urlencoded',
-        'origin': 'https://megt.astutepayroll.com',
+        'origin': f'https://{DOMAIN}',
         'pragma': 'no-cache',
-        'referer': 'https://megt.astutepayroll.com/megt/auth/login',
+        'referer': f'https://{DOMAIN}{LOGIN_PATH}',
         'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="104"',
         'sec-ch-ua-mobile': '?0',
         'sec-ch-ua-platform': '"Linux"',
@@ -30,23 +38,23 @@ def post_login(session: requests.Session):
         'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Safari/537.36',
     }
 
-    data = f'authenticate_userid=max.cutlyp&authenticate_password={password}&authenticate=yes&autologin=0&autologin=1&log_in=Log+In'
+    data = f'authenticate_userid={USER_ID}&authenticate_password={password}&authenticate=yes&autologin=0&autologin=1&log_in=Log+In'
 
     # todo: handle failure
-    response = session.post('https://megt.astutepayroll.com/megt/auth/login', headers=headers, data=data)
+    response = session.post(f'https://{DOMAIN}{LOGIN_PATH}', headers=headers, data=data)
 
 def post_timesheet_submit(session: requests.Session, monday: datetime.date):
     monday_formatted = monday.strftime('%Y-%m-%d')
 
     headers = {
-        'authority': 'megt.astutepayroll.com',
+        'authority': DOMAIN,
         'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
         'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
         'cache-control': 'no-cache',
         'content-type': 'multipart/form-data; boundary=----WebKitFormBoundaryfsXTtKjUet8vuqQ9',
-        'origin': 'https://megt.astutepayroll.com',
+        'origin': f'https://{DOMAIN}',
         'pragma': 'no-cache',
-        'referer': f'https://megt.astutepayroll.com/megt/attendance/manage/?MID=43555&UID=43564&date={monday_formatted}',
+        'referer': f'https://{DOMAIN}{SUBMIT_PATH}?MID={MID}&UID={UID}&date={monday_formatted}',
         'sec-ch-ua': '" Not A;Brand";v="99", "Chromium";v="104"',
         'sec-ch-ua-mobile': '?0',
         'sec-ch-ua-platform': '"Linux"',
@@ -59,8 +67,8 @@ def post_timesheet_submit(session: requests.Session, monday: datetime.date):
     }
 
     params = {
-        'MID': '43555',
-        'UID': '43564',
+        'MID': MID,
+        'UID': UID,
         'date': monday_formatted,
     }
 
@@ -70,9 +78,12 @@ def post_timesheet_submit(session: requests.Session, monday: datetime.date):
 
     for day in range(7):
         date = monday + td(days=day)
-        content = content.replace(bytes(date.strftime("DATE_%A").upper(), 'utf-8'), bytes(date.strftime('%Y-%m-%d'), 'utf-8'))
+        content = content.replace(bytes(date.strftime("<DATE_%A>").upper(), 'utf-8'), bytes(date.strftime('%Y-%m-%d'), 'utf-8'))
 
-    response = session.post('https://megt.astutepayroll.com/megt/attendance/manage/', params=params, headers=headers, data=content)
+    content = content.replace(b'<UID>', bytes(UID, 'utf-8'))
+    content = content.replace(b'<APPROVER_USER_ID>', bytes(APPROVER_USER_ID, 'utf-8'))
+
+    response = session.post(f'https://{DOMAIN}{SUBMIT_PATH}', params=params, headers=headers, data=content)
 
 def main():
     session = requests.Session()
