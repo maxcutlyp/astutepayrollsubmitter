@@ -5,6 +5,7 @@ UID = '43564'
 DOMAIN = 'megt.astutepayroll.com'
 LOGIN_PATH = '/megt/auth/login'
 SUBMIT_PATH = '/megt/attendance/manage/'
+PASSWORD_CMD = 'pass megt-payroll'
 
 TIMES = [
     # start, finish, break

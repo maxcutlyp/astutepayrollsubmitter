@@ -10,7 +10,7 @@ from datetime import timedelta as td
 import env # if you get an error here, make sure you've created an env.py and it's in the same folder as this script.
 
 def post_login(session: requests.Session):
-    password = sp.run(['pass', 'megt-payroll'], capture_output=True).stdout[:-1].decode()
+    password = sp.run(env.PASSWORD_CMD, shell=True, capture_output=True).stdout[:-1].decode()
 
     headers = {
         'authority': env.DOMAIN,
