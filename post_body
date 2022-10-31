@@ -25,11 +25,11 @@ Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_MONDAY>][<UID>
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_MONDAY>][<UID>][0][start]"
 
-7:30am
+<TIME_START_MONDAY>
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_MONDAY>][<UID>][0][finish]"
 
-4:00pm
+<TIME_FINISH_MONDAY>
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_MONDAY>][<UID>][0][_finish_pastMidnight]"
 
@@ -37,7 +37,7 @@ Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_MONDAY>][<UID>
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_MONDAY>][<UID>][0][break]"
 
-60
+<BREAK_MONDAY>
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_MONDAY>][<UID>][0][notes]"
 
@@ -65,11 +65,11 @@ Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_TUESDAY>][<UID
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_TUESDAY>][<UID>][0][start]"
 
-7:30am
+<TIME_START_TUESDAY>
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_TUESDAY>][<UID>][0][finish]"
 
-4:00pm
+<TIME_FINISH_TUESDAY>
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_TUESDAY>][<UID>][0][_finish_pastMidnight]"
 
@@ -77,7 +77,7 @@ Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_TUESDAY>][<UID
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_TUESDAY>][<UID>][0][break]"
 
-60
+<BREAK_TUESDAY>
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_TUESDAY>][<UID>][0][notes]"
 
@@ -105,11 +105,11 @@ Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_WEDNESDAY>][<U
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_WEDNESDAY>][<UID>][0][start]"
 
-7:30am
+<TIME_START_WEDNESDAY>
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_WEDNESDAY>][<UID>][0][finish]"
 
-4:00pm
+<TIME_FINISH_WEDNESDAY>
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_WEDNESDAY>][<UID>][0][_finish_pastMidnight]"
 
@@ -117,7 +117,7 @@ Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_WEDNESDAY>][<U
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_WEDNESDAY>][<UID>][0][break]"
 
-60
+<BREAK_WEDNESDAY>
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_WEDNESDAY>][<UID>][0][notes]"
 
@@ -145,11 +145,11 @@ Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_THURSDAY>][<UI
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_THURSDAY>][<UID>][0][start]"
 
-7:30am
+<TIME_START_THURSDAY>
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_THURSDAY>][<UID>][0][finish]"
 
-4:00pm
+<TIME_FINISH_THURSDAY>
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_THURSDAY>][<UID>][0][_finish_pastMidnight]"
 
@@ -157,7 +157,7 @@ Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_THURSDAY>][<UI
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_THURSDAY>][<UID>][0][break]"
 
-60
+<BREAK_THURSDAY>
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_THURSDAY>][<UID>][0][notes]"
 
@@ -185,11 +185,11 @@ Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_FRIDAY>][<UID>
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_FRIDAY>][<UID>][0][start]"
 
-7:30am
+<TIME_START_FRIDAY>
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_FRIDAY>][<UID>][0][finish]"
 
-4:00pm
+<TIME_FINISH_FRIDAY>
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_FRIDAY>][<UID>][0][_finish_pastMidnight]"
 
@@ -197,7 +197,7 @@ Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_FRIDAY>][<UID>
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_FRIDAY>][<UID>][0][break]"
 
-30
+<BREAK_FRIDAY>
 ------WebKitFormBoundaryfsXTtKjUet8vuqQ9
 Content-Disposition: form-data; name="Timesheets[DailyInfo][<DATE_FRIDAY>][<UID>][0][notes]"
 

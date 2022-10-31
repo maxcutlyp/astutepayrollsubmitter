@@ -14,6 +14,16 @@ UID = '43564'
 DOMAIN = 'megt.astutepayroll.com'
 LOGIN_PATH = '/megt/auth/login'
 SUBMIT_PATH = '/megt/attendance/manage/'
+TIMES = [
+    # start, finish, break
+    ('7:30am','4:00pm','60'),
+    ('7:30am','4:00pm','60'),
+    ('7:30am','4:00pm','60'),
+    ('7:30am','4:00pm','60'),
+    ('7:30am','4:00pm','30'),
+    (None,None,None),
+    (None,None,None),
+]
 
 def post_login(session: requests.Session):
     password = sp.run(['pass', 'megt-payroll'], capture_output=True).stdout[:-1].decode()
@@ -76,9 +86,17 @@ def post_timesheet_submit(session: requests.Session, monday: datetime.date):
     with open(os.path.join(cwd, 'post_body'), 'rb') as f:
         content = f.read()
 
-    for day in range(7):
+    for day,times in enumerate(TIMES):
         date = monday + td(days=day)
-        content = content.replace(bytes(date.strftime("<DATE_%A>").upper(), 'utf-8'), bytes(date.strftime('%Y-%m-%d'), 'utf-8'))
+
+        # <DATE_MONDAY> -> YYYY-MM-DD
+        content = content.replace(bytes(date.strftime("<DATE_%A>").upper(), 'utf-8'),
+                                  bytes(date.strftime('%Y-%m-%d'), 'utf-8'))
+        # <TIME_START_MONDAY> -> 7:30am
+        if times[0] is None: continue
+        for i,time in enumerate(['TIME_START','TIME_FINISH', 'BREAK']):
+            content = content.replace(bytes(date.strftime(f"<{time}_%A>").upper(), 'utf-8'),
+                                      bytes(times[i], 'utf-8'))
 
     content = content.replace(b'<UID>', bytes(UID, 'utf-8'))
     content = content.replace(b'<APPROVER_USER_ID>', bytes(APPROVER_USER_ID, 'utf-8'))
