@@ -52,3 +52,10 @@ Specifically around time entries. This would be an easy PR if you're looking to 
 
 Since the responses are just HTML, it's not trivial to parse them consistently for plaintext output. For now, you'll just have to check manually by logging into the web portal the first time until you trust that it works.
 </details>
+
+<details>
+<summary>Modifying env.py</summary>
+
+Either with `setup.py` to update an existing `env.py` if one exists, or with command-line arguments e.g. `--monday-start "9:30am"`. I'll probably do this the next time I have a non-standard time entry, but in the meantime you can just manually modify `env.py` (or re-run `setup.py` if it's a big change).
+</details>
+
