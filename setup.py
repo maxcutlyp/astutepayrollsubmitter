@@ -57,7 +57,7 @@ def main():
 {PASSWORD_CMD = }
 
 TIMES = [
-{_newline.join(f'    {time} # {(monday + td(day)).strftime("%A")}' for day,time in enumerate(TIMES))}
+{_newline.join(f'    {time}, # {(monday + td(day)).strftime("%A")}' for day,time in enumerate(TIMES))}
 ]
 '''
 
