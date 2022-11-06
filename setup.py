@@ -8,6 +8,8 @@ from datetime import timedelta as td
 default_times = ('9:00am', '5:00pm', '30')
 
 def main():
+    print('Running setup.py. See README for more info about any of the following prompts.')
+    print()
     login_url_raw = input('Paste the URL of your astutepayroll login page: ').strip()
     login_url_parsed = urllib.parse.urlparse(login_url_raw)
     DOMAIN = login_url_parsed.netloc
